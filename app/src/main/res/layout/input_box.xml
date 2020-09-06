@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TimePicker
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:background="#FFFFFF"
+            android:numbersTextColor="#FA0000"
+            android:backgroundTint="#E4E0E0"
+            android:timePickerMode="spinner"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TimePicker
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:background="#FFFFFF"
+            android:numbersTextColor="#FA0000"
+            android:backgroundTint="#E4E0E0"
+            android:timePickerMode="spinner"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:paddingLeft="15dp"
+            android:background="#FFFCFC"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:hint="Reminder Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+  <LinearLayout
+      android:paddingLeft="20dp"
+      android:weightSum="5"
+      android:layout_width="match_parent"
+      android:layout_height="80dp">
+          <TextView
+              android:gravity="center_vertical"
+              android:textSize="30sp"
+              android:text="Alarm sound"
+              android:layout_weight="3.5"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"/>
+      <Switch
+          android:paddingEnd="20dp"
+          android:layout_weight="1.5"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"/>
+
+
+  </LinearLayout>
+    <LinearLayout
+        android:paddingLeft="20dp"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:gravity="center_vertical"
+            android:textSize="30sp"
+            android:text="Vibration"
+            android:layout_weight="3.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <Switch
+            android:paddingEnd="20dp"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
