@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:weightSum="7"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:textSize="30sp"
+            android:text="S- 8:00 am"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+        <TextView
+            android:layout_weight="1"
+            android:paddingTop="6dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:textSize="30sp"
+            android:text="E- 8:45 am"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="S S M T W T F"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <Switch
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>
