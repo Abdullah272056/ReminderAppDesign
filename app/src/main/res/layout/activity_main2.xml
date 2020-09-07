@@ -13,13 +13,17 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_margin="5dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_width="match_parent"
+                android:weightSum="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TimePicker
+                    android:numbersInnerTextColor="#38009C"
                     android:id="@+id/startTimePickerId"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp"
@@ -27,9 +31,8 @@
                     android:numbersTextColor="#FA0000"
                     android:backgroundTint="#E4E0E0"
                     android:timePickerMode="spinner"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
                 <TimePicker
                     android:id="@+id/endTimePickerId"
                     android:paddingBottom="20dp"
@@ -38,11 +41,86 @@
                     android:numbersTextColor="#FA0000"
                     android:backgroundTint="#E4E0E0"
                     android:timePickerMode="spinner"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="Select Day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingRight="10dp"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:text="Sat"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Sun"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Mon"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Tue"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Wed"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Thu"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Fri"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_margin="5dp"
                 android:background="@drawable/card_bg"
@@ -55,7 +133,7 @@
                     android:background="#FFFCFC"
                     android:textColor="#000000"
                     android:textSize="30sp"
-                    android:hint="Reminder Name"
+                    android:hint="Enter reminder name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -73,6 +151,7 @@
                     android:layout_weight="3.5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"/>
+
                 <Switch
                     android:paddingEnd="20dp"
                     android:layout_weight="1.5"

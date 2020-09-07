@@ -11,9 +11,6 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        TimePicker startPicker=findViewById(R.id.startTimePickerId);
-        startPicker.setIs24HourView(true);
-        TimePicker endPicker=findViewById(R.id.endTimePickerId);
-        endPicker.setIs24HourView(true);
+       
     }
 }
