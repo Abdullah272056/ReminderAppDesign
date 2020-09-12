@@ -22,7 +22,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TimePicker
-
                         android:numbersInnerTextColor="#38009C"
                         android:id="@+id/startTimePickerId"
                         android:paddingBottom="20dp"
