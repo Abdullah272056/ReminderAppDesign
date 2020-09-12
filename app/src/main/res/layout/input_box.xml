@@ -3,95 +3,214 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TimePicker
+            android:layout_height="match_parent">
+            <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:backgroundTint="#E4E0E0"
-                android:numbersTextColor="#FA0000"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:timePickerMode="spinner" />
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TimePicker
 
-            <TimePicker
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:background="#FFFFFF"
-                android:numbersTextColor="#FA0000"
-                android:backgroundTint="#E4E0E0"
-                android:timePickerMode="spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                        android:numbersInnerTextColor="#38009C"
+                        android:id="@+id/startTimePickerId"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp"
+                        android:background="#FFFFFF"
+                        android:numbersTextColor="#FA0000"
+                        android:backgroundTint="#E4E0E0"
+                        android:timePickerMode="spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TimePicker
+                        android:id="@+id/endTimePickerId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:backgroundTint="#E4E0E0"
+                        android:numbersTextColor="#FA0000"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:timePickerMode="spinner" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/card_bg"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="25sp"
+                    android:text="Select Day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingRight="10dp"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:text="Sat"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Sun"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Mon"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Tue"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Wed"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Thu"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <CheckBox
+                            android:layout_marginLeft="20dp"
+                            android:text="Fri"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:background="@drawable/card_bg"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:paddingLeft="15dp"
+                    android:background="#FFFCFC"
+                    android:textColor="#000000"
+                    android:textSize="30sp"
+                    android:hint="Enter reminder name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:background="@drawable/card_bg"
+                android:paddingLeft="20dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:text="Alarm sound"
+                    android:layout_weight="3.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+                <Switch
+                    android:paddingEnd="20dp"
+                    android:layout_weight="1.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:background="@drawable/card_bg"
+                android:paddingLeft="20dp"
+                android:weightSum="5"
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:text="Vibration"
+                    android:layout_weight="3.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+                <Switch
+                    android:paddingEnd="20dp"
+                    android:layout_weight="1.5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:background="#FFFDFD"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:textSize="30sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/saveButtonId"
+                    android:background="#FFFDFD"
+                    android:layout_weight="1"
+                    android:text="Save"
+                    android:textSize="30sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 
-    </HorizontalScrollView>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:paddingLeft="15dp"
-            android:background="#FFFCFC"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            android:hint="Reminder Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-  <LinearLayout
-      android:paddingLeft="20dp"
-      android:weightSum="5"
-      android:layout_width="match_parent"
-      android:layout_height="80dp">
-          <TextView
-              android:textColor="#000000"
-              android:gravity="center_vertical"
-              android:textSize="30sp"
-              android:text="Alarm sound"
-              android:layout_weight="3.5"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"/>
-
-      <Switch
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1.5"
-          android:paddingEnd="20dp" />
-
-
-  </LinearLayout>
-    <LinearLayout
-        android:paddingLeft="20dp"
-        android:weightSum="5"
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-        <TextView
-            android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:textSize="30sp"
-            android:text="Vibration"
-            android:layout_weight="3.5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
-        <Switch
-            android:paddingEnd="20dp"
-            android:layout_weight="1.5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
-
-
-    </LinearLayout>
 
 </LinearLayout>
