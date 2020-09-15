@@ -19,7 +19,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
-            android:textSize="30sp"
+            android:textSize="22sp"
             android:text="S- 8:00 am"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
@@ -29,7 +29,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
-            android:textSize="30sp"
+            android:textSize="22sp"
             android:text="E- 8:45 am"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
@@ -41,14 +41,31 @@
         android:layout_weight="4"
         android:layout_width="0dp"
         android:layout_height="match_parent">
-        <TextView
-            android:gravity="center"
-            android:textSize="25sp"
-            android:text="S S M T W T F"
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_weight="3"
             android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:text="12345"
+                android:id="@+id/requestCodeTextViewId"
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:gravity="center"
+                android:textSize="25sp"
+                android:text="S S M T W T F"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
         <Switch
+            android:checked="false"
             android:id="@+id/switchButtonId"
             android:gravity="center"
             android:layout_weight="1"

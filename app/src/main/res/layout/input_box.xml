@@ -13,13 +13,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <HorizontalScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_margin="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TimePicker
                         android:numbersInnerTextColor="#38009C"
@@ -30,19 +29,9 @@
                         android:numbersTextColor="#FA0000"
                         android:backgroundTint="#E4E0E0"
                         android:timePickerMode="spinner"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
-                    <TimePicker
-                        android:id="@+id/endTimePickerId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:backgroundTint="#E4E0E0"
-                        android:numbersTextColor="#FA0000"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
-                        android:timePickerMode="spinner" />
 
                 </LinearLayout>
 

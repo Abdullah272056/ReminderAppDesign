@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioPlaybackConfiguration;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
@@ -18,6 +19,14 @@ import androidx.core.app.NotificationCompat;
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Uri alarmUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null) {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+        ringtone.play();
+
+
 
         int notificationRequest=intent.getIntExtra("notificationRequestCode",0);
         //String message=intent.getStringExtra("todo");
@@ -37,20 +46,23 @@ public class NotificationReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent=PendingIntent.getActivity(context,notificationRequest,destinationIntent
                 ,PendingIntent.FLAG_UPDATE_CURRENT);
         //for Notification sound........
-        Uri Sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
         NotificationCompat.Builder builder= new NotificationCompat.Builder(context,channelId)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setContentTitle("Teachers's Diary")
                 .setContentText("Be Ready for your Next Classes")
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setSound(Sound)
                 .setAutoCancel(true);
         notificationManager.notify(notificationId,builder.build());
         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
 
+
+
         //setVibrator
-        Vibrator vibrator= (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(10000);
+//        Vibrator vibrator= (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//        vibrator.vibrate(10000);
+        long[] pattern = {0, 300, 0};
+        builder.setVibrate(pattern);
     }
 }

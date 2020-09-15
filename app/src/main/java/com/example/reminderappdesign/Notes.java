@@ -1,9 +1,11 @@
 package com.example.reminderappdesign;
 public class Notes {
     int id ;
+
     String startTime,endTime;
     int notificationRequestCode,notificationId;
-    public Notes(int id, String startTime, String endTime, int notificationRequestCode, int notificationId) {
+    public Notes(int id, String startTime, String endTime, int notificationRequestCode,
+                 int notificationId) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;

@@ -33,7 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     }
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         LayoutInflater layoutInflater= LayoutInflater.from(context);
        View view= layoutInflater.inflate(R.layout.recyclerview_row_item,parent,false);
         return new MyViewHolder(view);
@@ -42,19 +42,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.startTimeTextView.setText(allNotes.get(position).getStartTime());
         holder.endTimeTextView.setText(allNotes.get(position).getEndTime());
+        holder.requestTextView.setText(String.valueOf(position));
 
         holder.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Intent intent=new Intent(context, NotificationReceiver.class);
-                    alarmIntent= PendingIntent.getBroadcast(context,
-                            allNotes.get(position).getNotificationRequestCode(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
-                    alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
-                    alarm.cancel(alarmIntent);
-                    // The toggle is enabled
+//                    Intent intent=new Intent(context, NotificationReceiver.class);
+//                    alarmIntent= PendingIntent.getBroadcast(context,
+//                            allNotes.get(position).getNotificationRequestCode(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+//                    alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//                    //alarm.cancel(alarmIntent);
+//                    // The toggle is enabled
                     Toast.makeText(context, "check", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "uncheck", Toast.LENGTH_SHORT).show();
+                }else{
+//                    Intent intent=new Intent(context, NotificationReceiver.class);
+//                    alarmIntent= PendingIntent.getBroadcast(context,
+//                            allNotes.get(position).getNotificationRequestCode(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+//                    alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//                    alarm.cancel(alarmIntent);
+//
+                   Toast.makeText(context, "uncheck", Toast.LENGTH_SHORT).show();
                     // The toggle is disabled
                 }
             }
@@ -66,12 +73,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return allNotes.size();
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView startTimeTextView,endTimeTextView;
+        TextView startTimeTextView,endTimeTextView,requestTextView;
         Switch switchButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             startTimeTextView= itemView.findViewById(R.id.startTimeTextView);
             endTimeTextView= itemView.findViewById(R.id.endTimeTextView);
+             requestTextView= itemView.findViewById(R.id.requestCodeTextViewId);
             switchButton= itemView.findViewById(R.id.switchButtonId);
         }
     }

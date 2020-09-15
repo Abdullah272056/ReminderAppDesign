@@ -16,21 +16,24 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.reminderappdesign.database.DataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 public class MainActivity extends AppCompatActivity {
+    int requestCode=1;
     RecyclerView recyclerView;
     FloatingActionButton floatingActionButton;
     DataBaseHelper dataBaseHelper;
     List<Notes> dataList;
-    DatePickerDialog.OnDateSetListener dateListener;
-    TimePickerDialog.OnTimeSetListener timeListener;
     Calendar calendar;
     CustomAdapter customAdapter;
     int notificationId=0;
     AlarmManager alarm;
-    PendingIntent alarmIntent,alarmIntentStop;
+    PendingIntent alarmIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void loadData(){
         dataList  = new ArrayList<>();
         dataList = dataBaseHelper.getAllNotes();
@@ -68,30 +72,44 @@ public class MainActivity extends AppCompatActivity {
         Button saveButton=view.findViewById(R.id.saveButtonId);
         final TimePicker startTimePicker =view.findViewById(R.id.startTimePickerId);
         final TimePicker endTimePicker =view.findViewById(R.id.endTimePickerId);
+
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                String startTime=startTimePicker.getHour()+":"+startTimePicker.getMinute();
-               String endTime=endTimePicker.getHour()+":"+endTimePicker.getMinute();
+            public void onClick(View v){
+                //dateFormat
+                DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+
+
+              // for startTime
                 int hour=startTimePicker.getCurrentHour();
                 int minute=startTimePicker.getCurrentMinute();
-                Calendar time=Calendar.getInstance();
-                time.set(Calendar.HOUR_OF_DAY,hour);
-                time.set(Calendar.MINUTE,minute);
-                time.set(Calendar.SECOND,0);
-                long alarmStartTime=time.getTimeInMillis();
+                Calendar startTimeCalender=Calendar.getInstance();
+                startTimeCalender.set(Calendar.HOUR_OF_DAY,hour);
+                startTimeCalender.set(Calendar.MINUTE,minute);
+                startTimeCalender.set(Calendar.SECOND,0);
+                String startTimeString = dateFormat.format(startTimeCalender.getTime()).toString();
+                long alarmStartTime=startTimeCalender.getTimeInMillis();
+
+               // convert long to int for notificationRequestCode
                 int notificationRequestCode= (int) alarmStartTime;
-                long id=dataBaseHelper.insertData(new Notes("S-"+startTime,"E-"+endTime,notificationRequestCode,notificationId));
+
+                //data inserting by insertData method
+                long id=dataBaseHelper.insertData(new Notes(startTimeString,startTimeString,notificationRequestCode,notificationId));
                 if (id != -1){
+
                     Intent intent=new Intent(MainActivity.this, NotificationReceiver.class);
                     intent.putExtra("notificationRequestCode",notificationRequestCode);
                     alarmIntent= PendingIntent.getBroadcast(MainActivity.this,
-                            notificationRequestCode,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                            (int) id,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                   //get ALARM_SERVICE from SystemService
                     alarm= (AlarmManager) getSystemService(ALARM_SERVICE);
+                    //alarm set
                     alarm.set(AlarmManager.RTC_WAKEUP,alarmStartTime,alarmIntent);
+
                     alertDialog.dismiss();
                     loadData();
-                    Toast.makeText(MainActivity.this, "Successfully Inserted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Successfully Inserted", Toast.LENGTH_SHORT).show();
                 }else {
                     alertDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Failed to Insert", Toast.LENGTH_SHORT).show();
