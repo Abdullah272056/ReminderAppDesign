@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 public class MainActivity extends AppCompatActivity {
-    int requestCode=1;
     RecyclerView recyclerView;
     FloatingActionButton floatingActionButton;
     DataBaseHelper dataBaseHelper;
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(customAdapter);
             customAdapter.notifyDataSetChanged();
         }else {
-            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
         }
     }
     private void CustomDialog(){
@@ -70,15 +66,15 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         Button saveButton=view.findViewById(R.id.saveButtonId);
+        Button cancelButton=view.findViewById(R.id.cancelButtonId);
         final TimePicker startTimePicker =view.findViewById(R.id.startTimePickerId);
-        final TimePicker endTimePicker =view.findViewById(R.id.endTimePickerId);
+       // final TimePicker endTimePicker =view.findViewById(R.id.endTimePickerId);
 
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //dateFormat
                 DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
-
 
               // for startTime
                 int hour=startTimePicker.getCurrentHour();
@@ -88,24 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 startTimeCalender.set(Calendar.MINUTE,minute);
                 startTimeCalender.set(Calendar.SECOND,0);
                 String startTimeString = dateFormat.format(startTimeCalender.getTime()).toString();
-                long alarmStartTime=startTimeCalender.getTimeInMillis();
+                long alarmStartTimeMiliSecond=startTimeCalender.getTimeInMillis();
 
                // convert long to int for notificationRequestCode
-                int notificationRequestCode= (int) alarmStartTime;
-
+                int notificationRequestCode= (int) alarmStartTimeMiliSecond;
                 //data inserting by insertData method
-                long id=dataBaseHelper.insertData(new Notes(startTimeString,startTimeString,notificationRequestCode,notificationId));
+                long id=dataBaseHelper.insertData(new Notes(startTimeString,String.valueOf(alarmStartTimeMiliSecond),notificationRequestCode,notificationId,1));
                 if (id != -1){
-
-                    Intent intent=new Intent(MainActivity.this, NotificationReceiver.class);
-                    intent.putExtra("notificationRequestCode",notificationRequestCode);
-                    alarmIntent= PendingIntent.getBroadcast(MainActivity.this,
-                            (int) id,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-                   //get ALARM_SERVICE from SystemService
-                    alarm= (AlarmManager) getSystemService(ALARM_SERVICE);
-                    //alarm set
-                    alarm.set(AlarmManager.RTC_WAKEUP,alarmStartTime,alarmIntent);
-
                     alertDialog.dismiss();
                     loadData();
                     Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
@@ -114,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Failed to Insert", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
         alertDialog.show();

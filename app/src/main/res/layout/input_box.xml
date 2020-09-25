@@ -13,20 +13,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <HorizontalScrollView
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TimePicker
-                        android:numbersInnerTextColor="#38009C"
                         android:id="@+id/startTimePickerId"
                         android:paddingBottom="20dp"
                         android:paddingTop="20dp"
                         android:background="#FFFFFF"
-                        android:numbersTextColor="#FA0000"
                         android:backgroundTint="#E4E0E0"
                         android:timePickerMode="spinner"
                         android:layout_width="match_parent"
@@ -179,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
+                    android:id="@+id/cancelButtonId"
                     android:background="#FFFDFD"
                     android:layout_weight="1"
                     android:text="Cancel"

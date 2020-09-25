@@ -7,24 +7,29 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioPlaybackConfiguration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
+
+import android.media.AudioManager;
 import android.os.Vibrator;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
-public class NotificationReceiver extends BroadcastReceiver {
+public class NotificationReceiver extends BroadcastReceiver{
+    AudioManager audioManager;
     @Override
     public void onReceive(Context context, Intent intent) {
-        Uri alarmUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        int mod=audioManager.getRingerMode();
+        if (mod== AudioManager.RINGER_MODE_NORMAL){
+            audioManager.setRingerMode(1);
+        }else if (mod==AudioManager.RINGER_MODE_VIBRATE){
+            audioManager.setRingerMode(1);
+            //Toast.makeText(context, "not allow", Toast.LENGTH_SHORT).show();
         }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
+        else {
+            Toast.makeText(context, "no change", Toast.LENGTH_SHORT).show();
+        }
 
 
 
@@ -59,10 +64,9 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 
 
-        //setVibrator
-//        Vibrator vibrator= (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-//        vibrator.vibrate(10000);
-        long[] pattern = {0, 300, 0};
-        builder.setVibrate(pattern);
+        //set Vibrator
+        Vibrator vibrator= (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(2000);
+
     }
 }

@@ -29,7 +29,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
-            android:textSize="22sp"
+            android:textSize="15sp"
             android:text="E- 8:45 am"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
@@ -58,7 +58,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:text="S S M T W T F"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
