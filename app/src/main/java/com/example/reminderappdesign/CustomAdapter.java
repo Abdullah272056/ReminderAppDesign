@@ -98,27 +98,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         if (switchButtonStatus==1){
             holder.switchButton.setChecked(true);
-            Intent intent=new Intent(context, NotificationReceiver.class);
-            intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
-            alarmIntent= PendingIntent.getBroadcast(context,
-                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
-            //get ALARM_SERVICE from SystemService
-            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
-            //alarm set
-            alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
-            //alarm.cancel(alarmIntent);
+//            Intent intent=new Intent(context, NotificationReceiver.class);
+//            intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
+//            alarmIntent= PendingIntent.getBroadcast(context,
+//                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+//            //get ALARM_SERVICE from SystemService
+//            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//            //alarm set
+//            alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
+
 
         }
         else if (switchButtonStatus==0){
-            Intent intent=new Intent(context, NotificationReceiver.class);
-            alarmIntent= PendingIntent.getBroadcast(context,
-                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
-            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
-            alarm.cancel(alarmIntent);
+//            Intent intent=new Intent(context, NotificationReceiver.class);
+//            alarmIntent= PendingIntent.getBroadcast(context,
+//                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+//            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//            alarm.cancel(alarmIntent);
 
             holder.switchButton.setChecked(false);
 
-            // alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
+
         }else {
 
         }
@@ -131,25 +131,42 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     long status = databaseHelper.updateData(new Notes(allNotes.get(position).getId(),
                             allNotes.get(position).getStartTime(),allNotes.get(position).getEndTime(),allNotes.get(position).getNotificationRequestCode(),
                             allNotes.get(position).getNotificationId(),1));
+
                     if (status == 1){
                         allNotes.clear();
                         allNotes.addAll(databaseHelper.getAllNotes());
                        // notifyDataSetChanged();
-                        Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                    }else {
+
+                        Intent intent=new Intent(context, NotificationReceiver.class);
+                    intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
+                    alarmIntent= PendingIntent.getBroadcast(context,
+                            allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                    //get ALARM_SERVICE from SystemService
+                    alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+                    //alarm set
+                    alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
+
+
+                        Toast.makeText(context, String.valueOf(allNotes.get(position).getId()), Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     long status = databaseHelper.updateData(new Notes(allNotes.get(position).getId(),
                             allNotes.get(position).getStartTime(),allNotes.get(position).getEndTime(),allNotes.get(position).getNotificationRequestCode(),
                             allNotes.get(position).getNotificationId(),0));
-                    if (status == 1){
+                    if (status == 0){
                         allNotes.clear();
                         allNotes.addAll(databaseHelper.getAllNotes());
                         //notifyDataSetChanged();
+
+                        Intent intent=new Intent(context, NotificationReceiver.class);
+            alarmIntent= PendingIntent.getBroadcast(context,
+                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarm.cancel(alarmIntent);
                         Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                    }else {
                     }
-                    Toast.makeText(context, "uncheck", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, String.valueOf(allNotes.get(position).getId()), Toast.LENGTH_SHORT).show();
+
                     // The toggle is disabled
                 }
             }

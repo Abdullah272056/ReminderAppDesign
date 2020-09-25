@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     int notificationId=0;
     AlarmManager alarm;
     PendingIntent alarmIntent;
+
+    long alarmStartTimeMiliSecond;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -84,13 +87,23 @@ public class MainActivity extends AppCompatActivity {
                 startTimeCalender.set(Calendar.MINUTE,minute);
                 startTimeCalender.set(Calendar.SECOND,0);
                 String startTimeString = dateFormat.format(startTimeCalender.getTime()).toString();
-                long alarmStartTimeMiliSecond=startTimeCalender.getTimeInMillis();
+               alarmStartTimeMiliSecond=startTimeCalender.getTimeInMillis();
 
                // convert long to int for notificationRequestCode
                 int notificationRequestCode= (int) alarmStartTimeMiliSecond;
                 //data inserting by insertData method
-                long id=dataBaseHelper.insertData(new Notes(startTimeString,String.valueOf(alarmStartTimeMiliSecond),notificationRequestCode,notificationId,1));
+                int  id=dataBaseHelper.insertData(new Notes(startTimeString,String.valueOf(alarmStartTimeMiliSecond),notificationRequestCode,notificationId,1));
                 if (id != -1){
+
+                    Intent intent=new Intent(MainActivity.this, NotificationReceiver.class);
+            //intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
+            alarmIntent= PendingIntent.getBroadcast(MainActivity.this,
+                    (int) id,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+            //get ALARM_SERVICE from SystemService
+            alarm= (AlarmManager) getSystemService(ALARM_SERVICE);
+            //alarm set
+            alarm.set(AlarmManager.RTC_WAKEUP,alarmStartTimeMiliSecond,alarmIntent);
+
                     alertDialog.dismiss();
                     loadData();
                     Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
