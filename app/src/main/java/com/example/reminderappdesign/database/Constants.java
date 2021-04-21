@@ -2,7 +2,7 @@ package com.example.reminderappdesign.database;
 
 public class Constants {
     public  static final String DATABASE_NAME="Reminder.db";
-    public  static final int DATABASE_Version=10;
+    public  static final int DATABASE_Version=15;
     public  static final String TABLE_NAME="ReminderInformation";
     public  static final String COLUMN_ID="id";
     public  static final String COLUMN_START_TIME="StartTime";

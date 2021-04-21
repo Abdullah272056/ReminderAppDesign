@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     Calendar calendar;
     CustomAdapter customAdapter;
     int notificationId=0;
-    AlarmManager alarm;
-    PendingIntent alarmIntent;
+    AlarmManager alarm,alarm1;
+    PendingIntent alarmIntent,alarmIntent1;
 
-    long alarmStartTimeMiliSecond;
+    long alarmStartTimeMilliSecond;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void CustomDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
         LayoutInflater layoutInflater =LayoutInflater.from(MainActivity.this);
@@ -80,29 +81,45 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
 
               // for startTime
-                int hour=startTimePicker.getCurrentHour();
-                int minute=startTimePicker.getCurrentMinute();
+               // int hour=startTimePicker.getCurrentHour();
+                int hour=startTimePicker.getHour();
+               // int minute=startTimePicker.getCurrentMinute();
+                int minute=startTimePicker.getMinute();
                 Calendar startTimeCalender=Calendar.getInstance();
                 startTimeCalender.set(Calendar.HOUR_OF_DAY,hour);
                 startTimeCalender.set(Calendar.MINUTE,minute);
                 startTimeCalender.set(Calendar.SECOND,0);
                 String startTimeString = dateFormat.format(startTimeCalender.getTime()).toString();
-               alarmStartTimeMiliSecond=startTimeCalender.getTimeInMillis();
+                alarmStartTimeMilliSecond=startTimeCalender.getTimeInMillis();
 
                // convert long to int for notificationRequestCode
-                int notificationRequestCode= (int) alarmStartTimeMiliSecond;
+                int notificationRequestCode= (int) alarmStartTimeMilliSecond;
                 //data inserting by insertData method
-                int  id=dataBaseHelper.insertData(new Notes(startTimeString,String.valueOf(alarmStartTimeMiliSecond),notificationRequestCode,notificationId,1));
+                int  id=dataBaseHelper.insertData(new Notes(startTimeString,String.valueOf(alarmStartTimeMilliSecond),notificationRequestCode,notificationId,1));
                 if (id != -1){
 
-                    Intent intent=new Intent(MainActivity.this, NotificationReceiver.class);
-            //intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
+
+
+            Intent intent=new Intent(getApplication(), NotificationReceiver.class);
+            Intent intent1=new Intent(getApplication(), NotificationReceiver1.class);
+            intent.putExtra("notificationRequestCode",id);
+            intent.putExtra("TargetTimeMilliSecond",alarmStartTimeMilliSecond);
             alarmIntent= PendingIntent.getBroadcast(MainActivity.this,
-                    (int) id,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                    (int) id,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmIntent1= PendingIntent.getBroadcast(MainActivity.this,
+                    (int) id,intent1,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+
+
+
             //get ALARM_SERVICE from SystemService
             alarm= (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarm1= (AlarmManager) getSystemService(ALARM_SERVICE);
             //alarm set
-            alarm.set(AlarmManager.RTC_WAKEUP,alarmStartTimeMiliSecond,alarmIntent);
+                    long alrm=alarmStartTimeMilliSecond+60000;
+            alarm.set(AlarmManager.RTC_WAKEUP,alarmStartTimeMilliSecond,alarmIntent);
+            alarm1.set(AlarmManager.RTC_WAKEUP,alrm,alarmIntent1);
 
                     alertDialog.dismiss();
                     loadData();

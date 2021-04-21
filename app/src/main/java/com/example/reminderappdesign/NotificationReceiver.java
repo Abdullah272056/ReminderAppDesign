@@ -19,6 +19,7 @@ public class NotificationReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
 
+
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         int mod=audioManager.getRingerMode();
         if (mod== AudioManager.RINGER_MODE_NORMAL){
@@ -34,9 +35,12 @@ public class NotificationReceiver extends BroadcastReceiver{
 
 
         int notificationRequest=intent.getIntExtra("notificationRequestCode",0);
+        long TargetTimeMilliSecond=intent.getIntExtra("TargetTimeMilliSecond",0);
+
+
         //String message=intent.getStringExtra("todo");
         NotificationManager notificationManager= (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        int notificationId = 100;
+        int notificationI = 100;
         String channelId = "channel-01";
         String channelName = "Channel Name";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -55,11 +59,11 @@ public class NotificationReceiver extends BroadcastReceiver{
         NotificationCompat.Builder builder= new NotificationCompat.Builder(context,channelId)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                .setContentTitle("Teachers's Diary")
+                .setContentTitle("Teachers's Diary"+String.valueOf(notificationRequest))
                 .setContentText("Be Ready for your Next Classes")
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setAutoCancel(true);
-        notificationManager.notify(notificationId,builder.build());
+        notificationManager.notify(notificationRequest,builder.build());
         Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
 
 

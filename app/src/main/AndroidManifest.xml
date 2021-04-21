@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <receiver android:name=".NotificationReceiver"/>
+        <receiver android:name=".NotificationReceiver1"/>
     </application>
 
 </manifest>

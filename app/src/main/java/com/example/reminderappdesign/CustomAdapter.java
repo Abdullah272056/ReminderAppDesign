@@ -25,7 +25,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     AlarmManager alarm;
     PendingIntent alarmIntent;
     int switchButtonStatus;
-    public CustomAdapter(Context context, List<Notes> allNotes) {
+    long currentMilliSecond;
+    public CustomAdapter(Context context,List<Notes> allNotes){
         this.context = context;
         this.allNotes = allNotes;
         this.context=context;
@@ -126,6 +127,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
+                  currentMilliSecond=System.currentTimeMillis();
+
                     Toast.makeText(context, "check", Toast.LENGTH_SHORT).show();
 
                     long status = databaseHelper.updateData(new Notes(allNotes.get(position).getId(),
@@ -135,35 +139,40 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     if (status == 1){
                         allNotes.clear();
                         allNotes.addAll(databaseHelper.getAllNotes());
-                       // notifyDataSetChanged();
+                        notifyDataSetChanged();
+                        if (currentMilliSecond<=Long.parseLong(allNotes.get(position).getEndTime())){
 
-                        Intent intent=new Intent(context, NotificationReceiver.class);
-                    intent.putExtra("notificationRequestCode",  allNotes.get(position).getId());
-                    alarmIntent= PendingIntent.getBroadcast(context,
-                            allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
-                    //get ALARM_SERVICE from SystemService
-                    alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
-                    //alarm set
-                    alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
+                            Intent intent=new Intent(context, NotificationReceiver.class);
+                            intent.putExtra("notificationRequestCode",allNotes.get(position).getId());
+                            intent.putExtra("TargetTimeMilliSecond",Long.parseLong(allNotes.get(position).getEndTime()));
+                            alarmIntent= PendingIntent.getBroadcast(context,
+                                    allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                            //get ALARM_SERVICE from SystemService
+                            alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
+                            //alarm set
+                            alarm.set(AlarmManager.RTC_WAKEUP,Long.parseLong(allNotes.get(position).getEndTime()),alarmIntent);
 
-
+                        }else {
+                            Toast.makeText(context, "Current Time is bigger than target time", Toast.LENGTH_SHORT).show();
+                        }
                         Toast.makeText(context, String.valueOf(allNotes.get(position).getId()), Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                }
+                else{
                     long status = databaseHelper.updateData(new Notes(allNotes.get(position).getId(),
                             allNotes.get(position).getStartTime(),allNotes.get(position).getEndTime(),allNotes.get(position).getNotificationRequestCode(),
                             allNotes.get(position).getNotificationId(),0));
-                    if (status == 0){
+                    if (status == 1){
                         allNotes.clear();
                         allNotes.addAll(databaseHelper.getAllNotes());
-                        //notifyDataSetChanged();
+                        notifyDataSetChanged();
 
                         Intent intent=new Intent(context, NotificationReceiver.class);
             alarmIntent= PendingIntent.getBroadcast(context,
                     allNotes.get(position).getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
             alarm= (AlarmManager) context.getSystemService(ALARM_SERVICE);
             alarm.cancel(alarmIntent);
-                        Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
                     }
                     Toast.makeText(context, String.valueOf(allNotes.get(position).getId()), Toast.LENGTH_SHORT).show();
 
